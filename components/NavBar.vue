@@ -11,6 +11,8 @@ function search(q: string) {
   if (q === '') return tagList
   return tagList.filter((tag) => tag.details.some((detail) => detail.includes(q.toLocaleLowerCase())))
 }
+
+const { isShowOnlyStar } = storeToRefs(useStarListStore())
 </script>
 
 <template>
@@ -18,20 +20,12 @@ function search(q: string) {
     <div class="flex justify-center items-center text-lg gap-4 pt-2 text-cyan-500 font-500">
       MyGo!!!!! 圖片搜尋工具
       <div class="flex items-center gap-1">
-        <UTooltip text="切換模式" >
+        <UTooltip text="切換主題" >
           <UButton
             :icon="mode === 'light' ? 'i-material-symbols:light-mode-outline' : 'i-material-symbols:dark-mode-rounded'"
             color="primary"
             variant="ghost"
             @click="mode = mode === 'light' ? 'dark' : 'light'"
-            class="text-lg"
-          />
-        </UTooltip>
-        <UTooltip text="我的收藏" >
-          <UButton
-            icon="i-material-symbols:kid-star-outline"
-            color="primary"
-            variant="ghost"
             class="text-lg"
           />
         </UTooltip>
@@ -41,6 +35,7 @@ function search(q: string) {
             color="primary"
             variant="ghost"
             class="text-lg"
+            @click="navigateTo('https://github.com/Minato1123/mygo', { external: true, open: { target: '_blank' } })"
           />
         </UTooltip>
       </div>
@@ -65,17 +60,28 @@ function search(q: string) {
           />
         </template>
       </UInput>
-      <USelectMenu
-        v-model="selected"
-        variant="outline"
-        :searchable="search"
-        placeholder="選擇標籤"
-        option-attribute="name"
-        multiple
-        trailing
-        by="id"
-        class="min-w-64"
-      />
+      <div class="flex gap-x-2">
+        <USelectMenu
+          v-model="selected"
+          variant="outline"
+          :searchable="search"
+          placeholder="選擇標籤"
+          option-attribute="name"
+          multiple
+          trailing
+          by="id"
+          class="min-w-64 grow"
+        />
+        <UTooltip :text="isShowOnlyStar ?'顯示全部' : '顯示已收藏'">
+          <UButton
+            :icon="isShowOnlyStar ? 'i-material-symbols:kid-star' : 'i-material-symbols:kid-star-outline'"
+            color="primary"
+            variant="ghost"
+            class="text-lg"
+            @click="isShowOnlyStar = !isShowOnlyStar"
+          />
+        </UTooltip>
+      </div>
     </div>
   </div>
 </template>

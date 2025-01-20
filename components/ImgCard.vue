@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboardItems } from '@vueuse/core'
+import { useStarListStore } from '~/stores/star';
 
 
 defineProps<{
@@ -19,6 +20,7 @@ const source = ref([
 ])
 
 const { content, copy, copied, isSupported } = useClipboardItems({ source })
+const { addToStarList, removeFromStarList, isInStarList } = useStarListStore()
 
 </script>
 
@@ -28,20 +30,20 @@ const { content, copy, copied, isSupported } = useClipboardItems({ source })
       <Transition>
         <div v-if="isHovered" class="absolute w-full h-full bg-black/20 top-0 left-0 rounded flex justify-center items-center gap-x-8">
           <button class="flex justify-center items-center">
-            <div class="i-mingcute:download-2-line text-4xl text-white/60 hover:text-white/90 transition-colors duration-300"></div>
+            <div class="i-mingcute:download-2-line text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
           <button class="flex justify-center items-center">
-            <div class="i-material-symbols:content-copy-outline-rounded text-4xl text-white/60 hover:text-white/90 transition-colors duration-300"></div>
+            <div class="i-material-symbols:content-copy-outline-rounded text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
-          <button class="flex justify-center items-center">
-            <div class="i-material-symbols:kid-star-outline text-4xl text-white/60 hover:text-white/90 transition-colors duration-300"></div>
-            <!-- <div class="i-material-symbols:kid-star text-2xl"></div> -->
+          <button class="flex justify-center items-center" @click="isInStarList(img) ? removeFromStarList(img) : addToStarList(img)">
+            <div v-show="!isInStarList(img)" class="i-material-symbols:kid-star-outline text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
+            <div v-show="isInStarList(img)" class="i-material-symbols:kid-star text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
         </div>
       </Transition>
      </div>
     <p class="text-center">
-      {{ title ?? 'alt' }}
+      {{ title }}
     </p>
     <p class="text-sm opacity-40 flex gap-x-2 justify-center flex-wrap" >
       <a v-for="tag in tags" :key="`${img}-${tag}`" href="" class="hover:opacity-80 transition-colors duration-200">#{{ tag }}</a>

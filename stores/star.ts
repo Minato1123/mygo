@@ -2,6 +2,7 @@ import { useStorage } from '@vueuse/core'
 
 export const useStarListStore = defineStore('star-list', () => {
   const starList = useStorage<string[]>('star', [])
+  const isShowOnlyStar = ref(false)
 
   function addToStarList(path: string) {
     starList.value.push(path)
@@ -10,8 +11,15 @@ export const useStarListStore = defineStore('star-list', () => {
     starList.value = starList.value.filter((item) => item !== path)
   }
 
-  return { starList,
+  function isInStarList(path: string) {
+    return starList.value.includes(path)
+  }
+
+  return { 
+    starList,
+    isShowOnlyStar,
     addToStarList,
-removeFromStarList
+    removeFromStarList,
+    isInStarList
    }
 })

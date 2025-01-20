@@ -10,23 +10,11 @@ defineProps<{
   }[][]
 }>()
 
-const items = [{
-  label: '全部',
-  slot: 'all',
-}, {
-  label: 'MyGo!!!!!',
-  slot: 'mygo',
-}, {
-  label: 'Ave Mujica',
-  slot: 'ave-mujica',
-}]
-
 
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <UTabs :items="items" class="px-2 sm:px-4" />
+  
     <div class="w-full grow min-h-0 overflow-y-auto">
       <UseVirtualList :list="imgCardList" :options="{ itemHeight: 300 }" height="full">
         <template #default="props">
@@ -42,6 +30,5 @@ const items = [{
           </div>
         </template>
       </UseVirtualList>
-    </div>
   </div>
 </template>
