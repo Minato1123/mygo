@@ -1,0 +1,81 @@
+<script setup lang="ts">
+import { useColorMode } from '@vueuse/core'
+import { tagList } from '@/data/tagList'
+
+const mode = useColorMode()
+const keyword = ref('')
+const selected = ref([])
+
+
+function search(q: string) {
+  if (q === '') return tagList
+  return tagList.filter((tag) => tag.details.some((detail) => detail.includes(q.toLocaleLowerCase())))
+}
+</script>
+
+<template>
+  <div class="flex flex-col justify-center gap-2 px-2 sm:px-4 pb-2">
+    <div class="flex justify-center items-center text-lg gap-4 pt-2 text-cyan-500 font-500">
+      MyGo!!!!! 圖片搜尋工具
+      <div class="flex items-center gap-1">
+        <UTooltip text="切換模式" >
+          <UButton
+            :icon="mode === 'light' ? 'i-material-symbols:light-mode-outline' : 'i-material-symbols:dark-mode-rounded'"
+            color="primary"
+            variant="ghost"
+            @click="mode = mode === 'light' ? 'dark' : 'light'"
+            class="text-lg"
+          />
+        </UTooltip>
+        <UTooltip text="我的收藏" >
+          <UButton
+            icon="i-material-symbols:kid-star-outline"
+            color="primary"
+            variant="ghost"
+            class="text-lg"
+          />
+        </UTooltip>
+        <UTooltip text="GitHub" >
+          <UButton
+            icon="i-bx:bxl-github"
+            color="primary"
+            variant="ghost"
+            class="text-lg"
+          />
+        </UTooltip>
+      </div>
+      
+    </div>
+    <div class="flex justify-center gap-x-4 gap-y-2 flex-col sm:flex-row">
+      <UInput
+        variant="outline"
+        placeholder="搜尋台詞"
+        v-model="keyword"
+        class="min-w-80"
+        :ui="{ icon: { trailing: { pointer: '' } } }"
+      >
+        <template #trailing>
+          <UButton
+            v-show="keyword.length > 0"
+            color="gray"
+            variant="link"
+            icon="i-heroicons-x-mark-20-solid"
+            :padded="false"
+            @click="keyword = ''"
+          />
+        </template>
+      </UInput>
+      <USelectMenu
+        v-model="selected"
+        variant="outline"
+        :searchable="search"
+        placeholder="選擇標籤"
+        option-attribute="name"
+        multiple
+        trailing
+        by="id"
+        class="min-w-64"
+      />
+    </div>
+  </div>
+</template>
