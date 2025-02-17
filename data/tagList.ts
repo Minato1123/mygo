@@ -1,6 +1,6 @@
 export const tagList = [
   { id: 1, name: '高松燈', details: ['高松燈', '高松灯', 'tomori', 'tomorin', 'mygo', 'crychic'] },
-  { id: 2, name: '千早愛音', details: ['千早愛音', '千早爱音', 'mygo'] },
+  { id: 2, name: '千早愛音', details: ['千早愛音', '千早爱音', 'anon', 'mygo'] },
   { id: 3, name: '椎名立希', details: ['椎名立希', 'rikki', 'mygo', 'crychic'] },
   { id: 4, name: '長崎爽世（長崎そよ）', details: ['長崎爽世', '長崎そよ', '长崎爽世', 'soyo', 'soyorin', 'mygo', 'crychic'] },
   { id: 5, name: '要樂奈（要楽奈）', details: ['要樂奈', '要楽奈', '要乐奈', '野貓', '野猫', 'mygo'] },
