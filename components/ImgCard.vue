@@ -3,7 +3,7 @@ import { useClipboardItems } from '@vueuse/core'
 import { useStarListStore } from '~/stores/star';
 
 
-defineProps<{
+const props = defineProps<{
   img: string
   title: string
   tags: string[]
@@ -12,14 +12,36 @@ defineProps<{
 const myHoverableElement = ref()
 const isHovered = useElementHover(myHoverableElement)
 
-const mime = 'image/jpeg'
+const mime = 'text/plain'
 const source = ref([
-  new ClipboardItem({
-    [mime]: new Blob(['<b>HTML content</b>'], { type: mime }),
+new ClipboardItem({
+    [mime]: new Blob(['plain text'], { type: mime }),
   })
 ])
 
 const { content, copy, copied, isSupported } = useClipboardItems({ source })
+async function copyImage() {
+  const response = await fetch(props.img)
+  const blob = await response.blob()
+  const mime = blob.type
+
+  await copy([
+    new ClipboardItem({
+      [mime]: blob,
+    })
+  ])
+}
+
+function downloadImage() {
+  const link = document.createElement('a')
+  link.href = props.img
+  link.download = props.title
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+
 const { addToStarList, removeFromStarList, isInStarList } = useStarListStore()
 
 </script>
@@ -29,10 +51,10 @@ const { addToStarList, removeFromStarList, isInStarList } = useStarListStore()
      <div ref="myHoverableElement" class="bg-gray w-full rounded aspect-[16/9] mb-1 relative bg-cover" :style="{ backgroundImage: `url(${img})` }">
       <Transition>
         <div v-if="isHovered" class="absolute w-full h-full bg-black/20 top-0 left-0 rounded flex justify-center items-center gap-x-8">
-          <button class="flex justify-center items-center">
+          <button class="flex justify-center items-center" @click="downloadImage">
             <div class="i-mingcute:download-2-line text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
-          <button class="flex justify-center items-center">
+          <button class="flex justify-center items-center" @click="copyImage">
             <div class="i-material-symbols:content-copy-outline-rounded text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
           <button class="flex justify-center items-center" @click="isInStarList(img) ? removeFromStarList(img) : addToStarList(img)">
