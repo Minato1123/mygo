@@ -55,7 +55,8 @@ const { addToStarList, removeFromStarList, isInStarList } = useStarListStore()
             <div class="i-mingcute:download-2-line text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
           <button class="flex justify-center items-center" @click="copyImage">
-            <div class="i-material-symbols:content-copy-outline-rounded text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
+            <div v-if="copied" class="i-material-symbols:check-rounded text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
+            <div v-else class="i-material-symbols:content-copy-outline-rounded text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
           </button>
           <button class="flex justify-center items-center" @click="isInStarList(img) ? removeFromStarList(img) : addToStarList(img)">
             <div v-show="!isInStarList(img)" class="i-material-symbols:kid-star-outline text-4xl text-white/60 hover:text-white/90 transition-colors duration-300" />
