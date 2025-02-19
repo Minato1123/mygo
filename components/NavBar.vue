@@ -2,6 +2,10 @@
 import { useColorMode } from '@vueuse/core'
 import { tagList } from '@/data/tagList'
 
+const emit = defineEmits<{
+  filterImgList: (data: { keyword: string, selected: string[], isOnlyStar: boolean }) => void
+}>()
+
 const mode = useColorMode()
 const keyword = ref('')
 const selected = ref([])
@@ -12,7 +16,12 @@ function search(q: string) {
   return tagList.filter((tag) => tag.details.some((detail) => detail.includes(q.toLocaleLowerCase())))
 }
 
-const { isShowOnlyStar } = storeToRefs(useStarListStore())
+const isOnlyStar = ref(false)
+watch([keyword, selected], () => {
+  emit('filterImgList', { keyword: keyword.value, selected: selected.value.map((tag) => tag.value), isOnlyStar })
+})
+
+// const { isShowOnlyStar } = storeToRefs(useStarListStore())
 </script>
 
 <template>
@@ -72,13 +81,13 @@ const { isShowOnlyStar } = storeToRefs(useStarListStore())
           by="id"
           class="min-w-64 grow"
         />
-        <UTooltip :text="isShowOnlyStar ?'顯示全部' : '顯示已收藏'">
+        <UTooltip :text="isOnlyStar ?'顯示全部' : '顯示已收藏'">
           <UButton
-            :icon="isShowOnlyStar ? 'i-material-symbols:kid-star' : 'i-material-symbols:kid-star-outline'"
+            :icon="isOnlyStar ? 'i-material-symbols:kid-star' : 'i-material-symbols:kid-star-outline'"
             color="primary"
             variant="ghost"
             class="text-lg"
-            @click="isShowOnlyStar = !isShowOnlyStar"
+            @click="isOnlyStar = !isOnlyStar"
           />
         </UTooltip>
       </div>

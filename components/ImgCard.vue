@@ -26,7 +26,7 @@ const { addToStarList, removeFromStarList, isInStarList } = useStarListStore()
 
 <template>
   <div>
-     <div ref="myHoverableElement" class="bg-gray w-full rounded aspect-[16/9] mb-1 relative">
+     <div ref="myHoverableElement" class="bg-gray w-full rounded aspect-[16/9] mb-1 relative bg-cover" :style="{ backgroundImage: `url(${img})` }">
       <Transition>
         <div v-if="isHovered" class="absolute w-full h-full bg-black/20 top-0 left-0 rounded flex justify-center items-center gap-x-8">
           <button class="flex justify-center items-center">
