@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# generate assets table
+pnpm generate
 rm -rf dist
 
 # abort on errors
