@@ -17,8 +17,11 @@ function search(q: string) {
 }
 
 const isOnlyStar = ref(false)
-watch([keyword, selected], () => {
-  emit('filterImgList', { keyword: keyword.value, selected: selected.value.map((tag) => tag.value), isOnlyStar })
+watch([keyword, selected, isOnlyStar], () => {
+  emit('filterImgList', { 
+    keyword: keyword.value, 
+    selected: selected.value.map((tag) => tag.value), 
+    isOnlyStar: isOnlyStar.value })
 })
 
 // const { isShowOnlyStar } = storeToRefs(useStarListStore())
@@ -81,7 +84,7 @@ watch([keyword, selected], () => {
           by="id"
           class="min-w-64 grow"
         />
-        <UTooltip :text="isOnlyStar ?'顯示全部' : '顯示已收藏'">
+        <UTooltip :text="isOnlyStar ?'顯示已收藏' : '顯示全部'">
           <UButton
             :icon="isOnlyStar ? 'i-material-symbols:kid-star' : 'i-material-symbols:kid-star-outline'"
             color="primary"
