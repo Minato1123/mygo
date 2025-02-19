@@ -54,7 +54,7 @@ async function scanDirectory(dir: string): Promise<AssetType[]> {
 async function main() {
   try {
     const pngFiles = await scanDirectory(ASSETS_DIR)
-    const outputPath = path.join(__dirname, '../data/assets_list.json')
+    const outputPath = path.join(__dirname, '../data/assetsTable.json')
 
     await fs.writeFile(outputPath, JSON.stringify(pngFiles, null, 2), 'utf-8')
     console.log(`JSON 已儲存至 ${outputPath}`)

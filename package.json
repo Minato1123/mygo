@@ -8,7 +8,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "generate": "tsx ./scripts/generateAssetsTable"
   },
   "dependencies": {
     "@nuxt/ui": "2.21.0",
