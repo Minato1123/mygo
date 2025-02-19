@@ -1,6 +1,6 @@
 # MyGo!!!!! 圖片搜尋工具
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Demo: https://minato1123.github.io/mygo/
 
 ## Setup
 
@@ -18,18 +18,10 @@ Start the development server on `http://localhost:3000`:
 pnpm dev
 ```
 
-## Production
+Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-Build the application for production:
+---
+## TODO
 
-```bash
-pnpm build
-```
-
-Locally preview production build:
-
-```bash
-pnpm preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [ ] Download the image
+- [ ] Copy the image
